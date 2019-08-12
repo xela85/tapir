@@ -54,12 +54,12 @@ class AkkaHttpServerTests extends ServerTests[Future, AkkaStream, Route] {
     Future { t }
   }
 
-  test("endpoint nested in a path directive") {
-    val e = endpoint.get.in("test" and "directive").out(stringBody).serverLogic(_ => pureResult("ok".asRight[Unit]))
-    val port = randomPort()
-    val route = Directives.pathPrefix("api")(e.toRoute)
-    server(NonEmptyList.of(route), port).use { _ =>
-      sttp.get(uri"http://localhost:$port/api/test/directive").send().map(_.body shouldBe Right("ok"))
-    }.unsafeRunSync
-  }
+//  test("endpoint nested in a path directive") {
+//    val e = endpoint.get.in("test" and "directive").out(stringBody).serverLogic(_ => pureResult("ok".asRight[Unit]))
+//    val port = randomPort()
+//    val route = Directives.pathPrefix("api")(e.toRoute)
+//    server(NonEmptyList.of(route), port).use { _ =>
+//      sttp.get(uri"http://localhost:$port/api/test/directive").send().map(_.body shouldBe Right("ok"))
+//    }.unsafeRunSync
+//  }
 }

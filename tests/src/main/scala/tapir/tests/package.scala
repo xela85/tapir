@@ -8,7 +8,10 @@ import tapir.json.circe._
 import com.softwaremill.macwire._
 import tapir.model._
 import com.softwaremill.tagging.@@
+import io.circe.{Decoder, Encoder}
+import tapir.Codec.PlainCodec
 import tapir.support.tagging._
+
 import scala.io.Source
 
 package object tests {
@@ -131,9 +134,16 @@ package object tests {
   val in_string_out_status: Endpoint[String, Unit, StatusCode, Nothing] =
     endpoint.in(query[String]("fruit")).out(statusCode)
 
-  implicit val schemaForColor: SchemaFor[String @@ Tapir] = SchemaFor(Schema.SString(Constraint.Enum("apple", "banana")))
+  implicit val schemaForTaggedType: SchemaFor[String @@ Tapir] = SchemaFor(Schema.SString(List(Constraint.Pattern("apple|banana"))))
   val in_query_out_string_constraints: Endpoint[String @@ Tapir, Unit, String, Nothing] =
     endpoint.in(query[String @@ Tapir]("fruit")).out(stringBody)
+
+  implicit val wrapperEncoder: Encoder[IntWrapper] = Encoder.encodeInt.contramap(_.value)
+  implicit val wrapperDecoder: Decoder[IntWrapper] = Decoder.decodeInt.map(c => new IntWrapper(c))
+  implicit def plainCodecForWrapper(implicit uc: PlainCodec[Int]): Codec[IntWrapper, MediaType.TextPlain, String] =
+    uc.map(c => new IntWrapper(c))(_.value).schema(Schema.SInteger(List(Constraint.Minimum(1).map[IntWrapper](_.value))))
+  val in_value_class_out_string_constraints: Endpoint[IntWrapper, Unit, String, Nothing] =
+    endpoint.in(query[IntWrapper]("count")).out(stringBody)
 
   val allTestEndpoints: Set[Endpoint[_, _, _, _]] = wireSet[Endpoint[_, _, _, _]]
 

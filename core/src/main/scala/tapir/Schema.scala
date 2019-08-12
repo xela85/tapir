@@ -12,11 +12,11 @@ object Schema {
     def apply(constraints: Constraint[String]*): SString = SString(constraints.toList)
   }
 
-  case class SInteger(constraints: List[Constraint[Int]] = List()) extends Schema {
+  case class SInteger(constraints: List[Constraint[_]] = List()) extends Schema {
     def show: String = "integer" + constraints.mkString(",")
   }
   object SInteger {
-    def apply(constraints: Constraint[Int]*): SInteger = SInteger(constraints.toList)
+    def apply(constraints: Constraint[_]*): SInteger = SInteger(constraints.toList)
   }
 
   case class SNumber[T: Numeric](constraints: List[Constraint[T]] = List()) extends Schema {
