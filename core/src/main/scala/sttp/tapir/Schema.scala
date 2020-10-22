@@ -82,7 +82,7 @@ class deprecated extends StaticAnnotation
 
 class encodedName(val name: String) extends StaticAnnotation
 
-object Schema extends SchemaMagnoliaDerivation with LowPrioritySchema {
+object Schema {
   val ModifyCollectionElements = "each"
 
   implicit val schemaForString: Schema[String] = Schema(SString)

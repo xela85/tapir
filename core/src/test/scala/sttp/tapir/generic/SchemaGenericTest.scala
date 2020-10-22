@@ -4,6 +4,7 @@ import java.math.{BigDecimal => JBigDecimal}
 
 import com.github.ghik.silencer.silent
 import sttp.tapir.SchemaType._
+import sttp.tapir.generic.auto._
 import sttp.tapir.{FieldName, Schema, SchemaType, deprecated, description, format, encodedName}
 
 import scala.concurrent.ExecutionContext.Implicits._
