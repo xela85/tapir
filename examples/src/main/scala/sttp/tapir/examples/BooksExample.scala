@@ -2,6 +2,7 @@ package sttp.tapir.examples
 
 import com.typesafe.scalalogging.StrictLogging
 import sttp.tapir.swagger.akkahttp.SwaggerAkka
+import sttp.tapir.generic.auto._
 
 object BooksExample extends App with StrictLogging {
   type Limit = Option[Int]
