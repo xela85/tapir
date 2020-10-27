@@ -5,7 +5,8 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.scaladsl.Flow
 import io.circe.generic.auto._
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import sttp.capabilities.WebSockets
 import sttp.capabilities.akka.AkkaStreams
 import sttp.client3._

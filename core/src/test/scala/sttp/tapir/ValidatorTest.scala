@@ -3,6 +3,7 @@ package sttp.tapir
 import java.util.concurrent.TimeUnit
 
 import com.github.ghik.silencer.silent
+import sttp.tapir.validator.semiauto._
 
 import scala.concurrent.duration.Duration
 import org.scalatest.flatspec.AnyFlatSpec
@@ -141,7 +142,7 @@ class ValidatorTest extends AnyFlatSpec with Matchers {
     case class Person(name: String, age: Int)
     implicit val nameValidator: Validator[String] = Validator.pattern("^[A-Z].*")
     implicit val ageValidator: Validator[Int] = Validator.min(18)
-    val validator = Validator.validatorForCaseClass[Person]
+    val validator = deriveValidator[Person]
     validator.validate(Person("notImportantButOld", 21)).map(noPath(_)) shouldBe List(
       ValidationError.Primitive(Validator.pattern("^[A-Z].*"), "notImportantButOld")
     )
@@ -232,6 +233,7 @@ class ValidatorTest extends AnyFlatSpec with Matchers {
   }
 
   it should "show recursive validators" in {
+    import sttp.tapir.validator.auto._
     val v: Validator[RecursiveName] = implicitly[Validator[RecursiveName]]
     v.show shouldBe Some("subNames->(elements(elements(recursive)))")
   }

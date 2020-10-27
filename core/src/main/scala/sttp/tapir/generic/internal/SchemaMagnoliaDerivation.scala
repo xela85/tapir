@@ -5,12 +5,13 @@ import magnolia._
 import sttp.tapir.SchemaType._
 import sttp.tapir.generic.{Configuration, Derived}
 import sttp.tapir.{deprecated, description, format, encodedName, FieldName, Schema, SchemaType}
-import SchemaMagnoliaDerivation.deriveInProgress
 
 import scala.collection.mutable
 
-trait SchemaMagnoliaDerivation {
-  type Typeclass[T] = Schema[T]
+object SchemaMagnoliaDerivation {
+  private[internal] val deriveInProgress: ThreadLocal[mutable.Set[String]] = new ThreadLocal()
+
+
 
   @silent("discarded")
   def combine[T](ctx: ReadOnlyCaseClass[Schema, T])(implicit genericDerivationConfig: Configuration): Schema[T] = {
@@ -96,9 +97,4 @@ trait SchemaMagnoliaDerivation {
     Schema(coproduct)
   }
 
-  implicit def schemaForCaseClass[T]: Derived[Schema[T]] = macro MagnoliaDerivedMacro.derivedGen[T]
-}
-
-object SchemaMagnoliaDerivation {
-  private[internal] val deriveInProgress: ThreadLocal[mutable.Set[String]] = new ThreadLocal()
 }

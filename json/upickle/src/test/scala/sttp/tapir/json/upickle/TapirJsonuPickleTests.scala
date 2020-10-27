@@ -2,7 +2,8 @@ package sttp.tapir.json.upickle
 
 import upickle.default._
 import org.scalatest.Assertion
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import java.util.Date
 
 import sttp.tapir.Codec.JsonCodec

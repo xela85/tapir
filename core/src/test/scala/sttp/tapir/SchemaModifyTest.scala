@@ -3,7 +3,7 @@ package sttp.tapir
 import sttp.tapir.SchemaType._
 import sttp.tapir.generic.{Configuration, D}
 import org.scalatest.flatspec.AnyFlatSpec
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
 import org.scalatest.matchers.should.Matchers
 
 class SchemaMacroTest extends AnyFlatSpec with Matchers {

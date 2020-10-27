@@ -9,7 +9,8 @@ import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.syntax.kleisli._
 import sttp.capabilities.WebSockets
 import sttp.capabilities.fs2.Fs2Streams
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import sttp.client3._
 import sttp.client3.asynchttpclient.fs2.AsyncHttpClientFs2Backend
 import sttp.tapir._

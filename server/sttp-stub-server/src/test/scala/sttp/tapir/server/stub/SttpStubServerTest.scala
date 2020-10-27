@@ -7,7 +7,8 @@ import sttp.client3.testing.SttpBackendStub
 import sttp.model.StatusCode
 import sttp.tapir._
 import sttp.tapir.json.circe._
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import sttp.monad.MonadError

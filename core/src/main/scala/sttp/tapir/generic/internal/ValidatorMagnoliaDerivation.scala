@@ -5,8 +5,7 @@ import magnolia.{Magnolia, ReadOnlyCaseClass, SealedTrait}
 import sttp.tapir.{FieldName, Validator, encodedName, generic}
 import sttp.tapir.generic.Configuration
 
-trait ValidatorMagnoliaDerivation {
-  type Typeclass[T] = Validator[T]
+object ValidatorMagnoliaDerivation {
 
   def combine[T](ctx: ReadOnlyCaseClass[Validator, T])(implicit genericDerivationConfig: Configuration): Validator[T] = {
     Validator.Product(ctx.parameters.map { p =>
@@ -15,7 +14,7 @@ trait ValidatorMagnoliaDerivation {
         override def name: FieldName =
           FieldName(p.label, getEncodedName(p.annotations).getOrElse(genericDerivationConfig.toEncodedName(p.label)))
         override def get(t: T): FieldType = p.dereference(t)
-        override def validator: Typeclass[FieldType] = p.typeclass
+        override def validator: Validator[FieldType] = p.typeclass
       }
     }.toMap)
   }
@@ -26,13 +25,9 @@ trait ValidatorMagnoliaDerivation {
   @silent("never used")
   def dispatch[T](ctx: SealedTrait[Validator, T]): Validator[T] =
     Validator.Coproduct(new generic.SealedTrait[Validator, T] {
-      override def dispatch(t: T): Typeclass[T] = ctx.dispatch(t) { v => v.typeclass.asInstanceOf[Validator[T]] }
+      override def dispatch(t: T): Validator[T] = ctx.dispatch(t) { v => v.typeclass.asInstanceOf[Validator[T]] }
 
-      override def subtypes: Map[String, Typeclass[Any]] =
+      override def subtypes: Map[String, Validator[Any]] =
         ctx.subtypes.map(st => st.typeName.full -> st.typeclass.asInstanceOf[Validator[scala.Any]]).toMap
     })
-
-  implicit def validatorForCaseClass[T]: Validator[T] = macro Magnolia.gen[T]
-
-  def fallback[T]: Validator[T] = Validator.pass
 }

@@ -2,6 +2,7 @@ package sttp.tapir.server
 
 import com.github.ghik.silencer.silent
 import sttp.tapir.Validator
+import sttp.tapir.validator.semiauto.deriveValidator
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -11,7 +12,7 @@ class ServerDefaultsTest extends AnyFlatSpec with Matchers {
     @silent("never used")
     implicit val addressNumberValidator: Validator[Int] = Validator.min(1)
     @silent("fallback derivation")
-    val personValidator = Validator.validatorForCaseClass[Person]
+    val personValidator = deriveValidator[Person]
 
     // when
     val validationErrors = personValidator.validate(Person("John", Address("Lane", 0)))

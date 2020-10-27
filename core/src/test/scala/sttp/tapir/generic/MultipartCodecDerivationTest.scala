@@ -4,7 +4,8 @@ import java.io.File
 
 import com.github.ghik.silencer.silent
 import sttp.model.{Header, MediaType, Part}
-import sttp.tapir.generic.auto._
+import sttp.tapir.validator.auto._
+import sttp.tapir.schema.auto._
 import sttp.tapir.SchemaType._
 import sttp.tapir.util.CompileUtil
 import sttp.tapir.{DecodeResult, FieldName, MultipartCodec, RawPart, Schema, Validator, encodedName}

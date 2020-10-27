@@ -2,7 +2,8 @@ package sttp.tapir.examples
 
 import com.typesafe.scalalogging.StrictLogging
 import sttp.tapir.Schema
-import sttp.tapir.generic.semiauto._
+import sttp.tapir.schema.semiauto._
+import sttp.tapir.validator.auto._
 import sttp.tapir.swagger.akkahttp.SwaggerAkka
 
 object BooksExampleSemiauto extends App with StrictLogging {
@@ -10,6 +11,9 @@ object BooksExampleSemiauto extends App with StrictLogging {
   type AuthToken = String
 
   case class Country(name: String)
+  object Country {
+    implicit val schemaForCountry: Schema[Country] = deriveSchema
+  }
   case class Author(name: String, country: Country)
   object Author {
     implicit val schemaForAuthor: Schema[Author] = deriveSchema

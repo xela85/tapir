@@ -20,7 +20,7 @@ sealed trait Validator[T] {
   def show: Option[String] = Validator.show(this)
 }
 
-object Validator extends ValidatorMagnoliaDerivation with ValidatorEnumMacro {
+object Validator extends ValidatorEnumMacro {
   type EncodeToRaw[T] = T => Option[scala.Any]
 
   private val _pass: Validator[Nothing] = all()

@@ -4,7 +4,8 @@ import org.scalatest.Assertion
 import play.api.libs.json._
 import sttp.tapir._
 import sttp.tapir.DecodeResult._
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 
 import java.util.Date
 import org.scalatest.flatspec.AnyFlatSpec

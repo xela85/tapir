@@ -5,7 +5,8 @@ import sttp.capabilities.{Streams, WebSockets}
 import sttp.tapir._
 import sttp.tapir.json.circe._
 import io.circe.generic.auto._
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import sttp.tapir.tests.Fruit
 
 trait ClientWebSocketTests[S] { this: ClientTests[S with WebSockets] =>

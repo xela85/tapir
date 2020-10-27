@@ -2,7 +2,8 @@ package sttp.tapir.example
 
 import com.typesafe.scalalogging.StrictLogging
 import sttp.tapir.example.Endpoints.Limit
-import sttp.tapir.generic.auto._
+import sttp.tapir.schema.auto._
+import sttp.tapir.validator.auto._
 import sttp.tapir.swagger.akkahttp.SwaggerAkka
 
 case class Country(name: String)
